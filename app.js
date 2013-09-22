@@ -57,25 +57,27 @@ Config.projects.forEach(function(prj){
 		fs.appendFile(Config.logfolder+'/frvr'+prj.id+prj.stderr, data, 'utf8');
 		prj.lastLog=data;
 	});
-	watch.watchTree(prj.folder, function (f, curr, prev) {
-    if (!(curr === null && prev === null && typeof f === 'object')) {
-    	testPatterns(prj.ignorepatterns,f,function(changed){
-    		if (changed){
-	    		fs.appendFile(Config.logfolder+'/frvr.log', '\nProject '+prj.title+' filechanged '+f, 'utf8');
-	      	console.log(f+' changed');	
-	    	} else {
-	    		console.log('ignored'+ f);
-	    	}
-    	});    	
-    }
-  });
+	if (prj.watch){
+		watch.watchTree(prj.folder, function (f, curr, prev) {
+	    if (!(curr === null && prev === null && typeof f === 'object')) {
+	    	testPatterns(prj.ignorepatterns,f,function(changed){
+	    		if (changed){
+		    		fs.appendFile(Config.logfolder+'/frvr.log', '\nProject '+prj.title+' filechanged '+f, 'utf8');
+		      	console.log(f+' changed');	
+		    	} else {
+		    		console.log('ignored'+ f);
+		    	}
+	    	});    	
+	    }
+	  });
+	}
 });
 
 
 http.createServer(function (req, res) {
-	console.log('request');
+	fs.appendFile(Config.logfolder+'/frvr.log', '\nWeb request', 'utf8');
 	res.writeHead(200, {'Content-Type': 'text/html'});
-	res.write('<table border=1><th>ID</th><th>Title</th><th>UpTime</th><th>LastMessage</th>');
+	res.write('<table border=1><th>ID</th><th>Title</th><th>UpTime</th><th>LastMessage</th><th>Log</th><th>ELog</th>');
 	Config.projects.forEach(function(prj){
 		res.write('<tr><td>'+prj.id+'</td><td>'+prj.title+'</td><td>'+timespan.fromDates(new Date(prj.starttime), new Date()).toString()+'</td><td>'+prj.lastLog+'</td></tr>');
 	});
