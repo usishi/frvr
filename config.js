@@ -13,7 +13,7 @@ exports.config={
 		},
 		{
 			title						: 'usishi web',
-			folder 					: '../../projects/8081.usishicom',
+			folder 					: '/node/projects/8081.usishicom',
 			startup					: 'node app.js',
 			watch						: true,
 			stdout					: 'app.log',
@@ -22,7 +22,7 @@ exports.config={
 		},
 	  {
 			title						: 'Repoxplorer',
-			folder 					: '../../projects/8082.repoxplorer',
+			folder 					: '/node/projects/8082.repoxplorer',
 			startup					: 'node app.js',
 			watch						: true,
 			stdout					: 'app.log',
@@ -31,7 +31,7 @@ exports.config={
 		},
 		{
 			title						: 'Gıda Havuzu',
-			folder 					: '../../projects/8083.gidahavuzu',
+			folder 					: '/node/projects/8083.gidahavuzu',
 			startup					: 'node app.js',
 			watch						: false,
 			stdout					: 'app.log',
@@ -40,7 +40,7 @@ exports.config={
 		},
 		{
 			title						: 'Ebabil',
-			folder 					: '../../projects/8085.ebabil',
+			folder 					: '/node/projects/8085.ebabil',
 			startup					: 'node app.js',
 			watch						: true,
 			stdout					: 'app.log',
@@ -49,7 +49,7 @@ exports.config={
 		},
 		{
 			title						: 'Ikinuu',
-			folder 					: '../../projects/8089.ikinuu',
+			folder 					: '/node/projects/8089.ikinuu',
 			startup					: 'node app.js',
 			watch						: true,
 			stdout					: 'app.log',
@@ -58,7 +58,7 @@ exports.config={
 		},
 		{
 			title						: 'Fatih Test (streamer)',
-			folder 					: '../../projects/8090.sanalalem.co',
+			folder 					: '/node/projects/8090.sanalalem.co',
 			startup					: 'node app.js',
 			watch						: true,
 			stdout					: 'app.log',
