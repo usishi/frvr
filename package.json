@@ -1,0 +1,34 @@
+{
+  "name": "frvr",
+  "preferGlobal": "true",
+  "description": "Minimalist forever",
+  "version": "0.0.1",
+  "author": "USISHI ICT <info@usishi.com>",
+  "maintainers": [
+    "Fatih Soydan <fatihsoydan@fatihsoydan.com>"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/usishi/frvr.git"
+  },
+  "keywords": [
+    "node",
+    "fault tolerant",
+    "sysadmin",
+    "tools"
+  ],
+  "dependencies": {
+    "timespan": "*",
+    "watch":"*"
+  },
+  "devDependencies": {
+    
+  },
+  "main": "app.js",
+  "scripts": {
+    "test": ""
+  },
+  "engines": {
+    "node": ">= 0.8.x"
+  }
+}
