@@ -105,9 +105,16 @@ http.createServer(function (req, res) {
 
 
 setInterval(function(){
+	if (jobs.length<1){
+		return;
+	}
 	var proj = jobs.shift();
 	try{
 		proj.process.kill();
 	} catch(e){}
 	runProject(proj);
 },Config.restartInterval);
+
+process.on("SIGUSR1", function() {
+	fs.writeFileSync("/tmp/aaaa.txt", new Date(),'utf8');
+});

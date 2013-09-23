@@ -6,21 +6,34 @@ var daemon = require("daemonize2").setup({
     pidfile: "frvr.pid"
 });
 
+
 switch (process.argv[2]) {
+  case "start":
+    daemon.start();
+    break;
 
-    case "start":
-        daemon.start();
-        break;
+  case "stop":
+    daemon.stop();
+    break;
 
-    case "stop":
-        daemon.stop();
-        break;
+  case "restart":  
+    daemon.stop();
+    daemon.start();
+    break;    
 
-    case "restart":
-        daemon.stop();
-        daemon.start();
-        break;    
+  case "list" : 
 
-    default:
-        console.log("Usage: [start|stop]");
+    break;
+
+  case "status" : 
+    var pid=daemon.status();
+    if (pid==0){
+      console.log('not running');
+    } else {
+      console.log('running ['+pid+']');
+    }
+    break;   
+
+  default:
+    console.log("Usage: [start|stop]");
 }
