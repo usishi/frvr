@@ -2,7 +2,7 @@
   "name": "frvr",
   "preferGlobal": "true",
   "description": "Minimalist forever",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "author": "USISHI ICT <info@usishi.com>",
   "maintainers": [
     "Fatih Soydan <fatihsoydan@fatihsoydan.com>"
@@ -26,7 +26,7 @@
     
   },
   "bin": {
-    "frvr": "./frvr"
+    "frvrd": "./frvrd"
   },
   "main": "app.js",
   "scripts": {
