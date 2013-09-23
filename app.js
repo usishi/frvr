@@ -81,6 +81,6 @@ http.createServer(function (req, res) {
 	Config.projects.forEach(function(prj){
 		res.write('<tr><td>'+prj.id+'</td><td>'+prj.title+'</td><td>'+timespan.fromDates(new Date(prj.starttime), new Date()).toString()+'</td><td>'+prj.lastLog+'</td></tr>');
 	});
-	res.end('</table>');
+	res.end('</table><br>Config location: /opt/local/lib/node_modules/frvr/config.js<br>');
   
 }).listen(Config.port);
