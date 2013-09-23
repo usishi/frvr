@@ -2,7 +2,7 @@
   "name": "frvr",
   "preferGlobal": "true",
   "description": "Minimalist forever",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "author": "USISHI ICT <info@usishi.com>",
   "maintainers": [
     "Fatih Soydan <fatihsoydan@fatihsoydan.com>"
@@ -18,8 +18,9 @@
     "tools"
   ],
   "dependencies": {
-    "timespan": "*",
-    "watch":"*"
+    "daemonize2"  : "*",
+    "timespan"    : "*",
+    "watch"       : "*"
   },
   "devDependencies": {
     
