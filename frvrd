@@ -16,6 +16,11 @@ switch (process.argv[2]) {
         daemon.stop();
         break;
 
+    case "restart":
+        daemon.stop();
+        daemon.start();
+        break;    
+
     default:
         console.log("Usage: [start|stop]");
 }

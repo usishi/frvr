@@ -10,6 +10,10 @@ var jobs=[];
 var lastid=0;
 
 
+var newLine=function(pname){
+	return '\n'+(new Date())+' : ['+pname+']';
+}
+
 var testPatterns=function(patterns,file,cb){
 	var arrPattern = patterns.split(',');
 	var pcount=arrPattern.length;
@@ -29,7 +33,7 @@ var testPatterns=function(patterns,file,cb){
 	}
 }
 
-Config.projects.forEach(function(prj){
+var runProject=function(prj){
 	if (prj.id==undefined){
 		prj.id=lastid++;
 	}
@@ -38,16 +42,17 @@ Config.projects.forEach(function(prj){
 	
 	var ps=spawn(runner,prm,{cwd:prj.folder}).on('error',function(e){
 		console.log("error"+e);
-		fs.appendFile(Config.logfolder+'/frvr.log', '\nProject '+prj.title+' has got error : '+e, 'utf8');
+		fs.appendFile(Config.logfolder+'/frvr.log', newLine(prj.title)+' has got error : '+e, 'utf8');
 		setTimeout(function(){
 			jobs.push(prj);
 		}, 1000);
 	});
+	prj.cprocess=ps;
 	prj.starttime=new Date();
-	fs.appendFile(Config.logfolder+'/frvr.log', '\nProject '+prj.title+' started ', 'utf8');
+	fs.appendFile(Config.logfolder+'/frvr.log', newLine(prj.title)+' started ', 'utf8');
 
 	ps.on('exit',function(r){
-		fs.appendFile(Config.logfolder+'/frvr.log', '\nProject '+prj.title+' exited with code '+r, 'utf8');
+		fs.appendFile(Config.logfolder+'/frvr.log', newLine(prj.title)+'exited with code '+r, 'utf8');
 	});
 	ps.stdout.on('data',function(data){ 
 		fs.appendFile(Config.logfolder+'/frvr'+prj.id+prj.stdout, data, 'utf8');
@@ -62,8 +67,12 @@ Config.projects.forEach(function(prj){
 	    if (!(curr === null && prev === null && typeof f === 'object')) {
 	    	testPatterns(prj.ignorepatterns,f,function(changed){
 	    		if (changed){
-		    		fs.appendFile(Config.logfolder+'/frvr.log', '\nProject '+prj.title+' filechanged '+f, 'utf8');
-		      	console.log(f+' changed');	
+		    		fs.appendFile(Config.logfolder+'/frvr.log', newLine(prj.title)+' filechanged '+f, 'utf8');
+		      	setTimeout(function(){
+		      		if (jobs.indexOf(prj)<0){
+		      			jobs.push(prj);	
+		      		}
+						}, 1000);
 		    	} else {
 		    		console.log('ignored'+ f);
 		    	}
@@ -71,6 +80,10 @@ Config.projects.forEach(function(prj){
 	    }
 	  });
 	}
+}
+
+Config.projects.forEach(function(prj){
+	runProject(prj);
 });
 
 
@@ -84,3 +97,13 @@ http.createServer(function (req, res) {
 	res.end('</table><br>Config location: /opt/local/lib/node_modules/frvr/config.js<br>');
   
 }).listen(Config.port);
+
+
+
+setInterval(function(){
+	var proj = jobs.shift();
+	try{
+		proj.kill();
+	} catch(e){}
+	runProject(proj);
+},Config.restartInterval);
