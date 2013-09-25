@@ -9,7 +9,9 @@ var daemon = require("daemonize2").setup({
 
 switch (process.argv[2]) {
   case "start":
-    daemon.start();
+    daemon.start().on('stopped',function(err,pid){
+      console.log("!!! You may need to check your config !!!");
+    })
     break;
 
   case "stop":
@@ -21,9 +23,6 @@ switch (process.argv[2]) {
     daemon.start();
     break;    
 
-  case "list" : 
-
-    break;
 
   case "status" : 
     var pid=daemon.status();
@@ -35,5 +34,5 @@ switch (process.argv[2]) {
     break;   
 
   default:
-    console.log("Usage: [start|stop]");
+    console.log("Usage: [start|stop|restart|status]");
 }
